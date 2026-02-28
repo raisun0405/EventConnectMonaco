@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monaco Grand Prix - EventConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ===== HEADER ===== */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: #000;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo .play-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: #f97316;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 3px;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 28px;
+      background: #d1d5db;
+      margin: 0 4px;
+    }
+
+    .event-title-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .event-title-area h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .event-title-area .bookmark-icon {
+      cursor: pointer;
+      color: #9ca3af;
+      font-size: 20px;
+    }
+
+    .event-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .event-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #374151;
+      white-space: nowrap;
+    }
+
+    .event-tag .material-icons-outlined {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #374151;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .header-btn:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    .header-btn .material-icons-outlined { font-size: 18px; }
+
+    .cart-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #374151;
+      font-size: 22px;
+      position: relative;
+      padding: 6px;
+      border-radius: 50%;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .cart-btn:hover {
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.06);
+    }
+
+    .search-btn {
+      background: none;
+      border: 1px solid #e5e7eb;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #374151;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+
+    .search-btn:hover {
+      border-color: #f97316;
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.04);
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 13px;
+      color: #6b7280;
+      background: #fff;
+    }
+
+    .breadcrumb a {
+      color: #f97316;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .breadcrumb .sep { color: #d1d5db; }
+
+    .breadcrumb .current { color: #111; font-weight: 500; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #6b7280;
+      text-decoration: none;
+      margin-right: 8px;
+      padding-right: 16px;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main-container {
+      display: flex;
+      height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+
+    /* ===== LEFT SIDEBAR (Filters) ===== */
+    .filter-sidebar {
+      width: 290px;
+      min-width: 290px;
+      border-right: 1px solid #e5e7eb;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .filter-sidebar::-webkit-scrollbar { width: 4px; }
+    .filter-sidebar::-webkit-scrollbar-track { background: transparent; }
+    .filter-sidebar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    .filter-sidebar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    .filter-sidebar { scroll-behavior: smooth; }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .filter-header .material-icons-outlined { font-size: 18px; }
+
+    .filter-section {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #f3f4f6;
+      padding-bottom: 20px;
+    }
+
+    .filter-section:last-child { border-bottom: none; }
+
+    .filter-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .filter-section-title .icon-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-section-title .material-icons-outlined { font-size: 16px; color: #6b7280; }
+
+    .filter-section-title .chevron { font-size: 20px; color: #9ca3af; transition: transform 0.2s; user-select: none; }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      color: #374151;
+      background: #fff;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%239ca3af'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .filter-select:hover { border-color: #9ca3af; }
+    .filter-select:focus { border-color: #f97316; outline: none; box-shadow: 0 0 0 2px rgba(249,115,22,0.1); }
+
+    /* Range Slider */
+    .range-slider-container { margin-top: 4px; position: relative; }
+
+    .range-slider-dual {
+      position: relative;
+      width: calc(100% - 8px);
+      margin: 8px 4px;
+      height: 32px;
+    }
+
+    .range-slider-dual input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 32px;
+      pointer-events: none;
+      background: transparent;
+      outline: none;
+      margin: 0;
+      padding: 0;
+      z-index: 3;
+    }
+
+    .range-slider-dual input[type="range"]#rangeMin {
+      z-index: 3;
+    }
+
+    .range-slider-dual input[type="range"]#rangeMax {
+      z-index: 4;
+    }
+
+    .range-slider-dual input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 3px solid #4ECBA0;
+      border-radius: 50%;
+      cursor: grab;
+      pointer-events: all;
+      position: relative;
+      margin-top: -7px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      transition: box-shadow 0.15s, transform 0.1s;
+    }
+
+    .range-slider-dual input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 6px rgba(78,203,160,0.18), 0 1px 4px rgba(0,0,0,0.15);
+      transform: scale(1.1);
+    }
+
+    .range-slider-dual input[type="range"]::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      box-shadow: 0 0 0 8px rgba(78,203,160,0.22), 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    .range-slider-dual input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      background: transparent;
+      border-radius: 3px;
+    }
+
+    .range-slider-dual input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 3px solid #4ECBA0;
+      border-radius: 50%;
+      cursor: grab;
+      pointer-events: all;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    .range-slider-dual input[type="range"]::-moz-range-thumb:active {
+      cursor: grabbing;
+    }
+
+    .range-slider-dual input[type="range"]::-moz-range-track {
+      height: 6px;
+      background: transparent;
+      border-radius: 3px;
+    }
+
+    .range-track-bg {
+      position: absolute;
+      width: 100%;
+      height: 6px;
+      top: 13px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .range-track-fill {
+      position: absolute;
+      height: 6px;
+      top: 13px;
+      background: #4ECBA0;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 2;
+      transition: left 0.05s, width 0.05s;
+    }
+
+    .price-inputs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .price-inputs .price-sep {
+      color: #9ca3af;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .price-input-group {
+      display: flex;
+      align-items: center;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 6px 10px;
+      flex: 1;
+      gap: 4px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .price-input-group .currency { color: #9ca3af; font-size: 13px; }
+
+    .price-input-group input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+      font-family: inherit;
+      color: #374151;
+    }
+
+    .price-input-group:focus-within {
+      border-color: #f97316;
+      box-shadow: 0 0 0 2px rgba(249,115,22,0.1);
+    }
+
+    /* Toggle Switch */
+    .toggle-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .toggle-item .label-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-item .label-with-icon .material-icons-outlined {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 42px;
+      min-width: 42px;
+      height: 24px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { display: none; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #d1d5db;
+      border-radius: 12px;
+      transition: background 0.25s ease;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: #4ECBA0;
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(18px);
+    }
+
+    .toggle-switch:hover .toggle-slider {
+      background: #c0c5cc;
+    }
+
+    .toggle-switch:hover input:checked + .toggle-slider {
+      background: #3dba91;
+    }
+
+    .reset-filters {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .reset-filters a {
+      color: #6b7280;
+      text-decoration: underline;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .reset-filters a:hover {
+      color: #f97316;
+    }
+
+    /* ===== CENTER PANEL (Packages) ===== */
+    .packages-panel {
+      flex: 1;
+      min-width: 320px;
+      max-width: 500px;
+      overflow-y: auto;
+      border-right: 1px solid #e5e7eb;
+      background: #fff;
+    }
+
+    .packages-panel::-webkit-scrollbar { width: 5px; }
+    .packages-panel::-webkit-scrollbar-track { background: transparent; }
+    .packages-panel::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    .packages-panel::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    .packages-panel { scroll-behavior: smooth; }
+
+    .category-group {
+      padding: 0 20px;
+      padding-top: 20px;
+    }
+
+    .category-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .our-choice-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #111;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .our-choice-badge .material-icons-outlined { font-size: 13px; }
+
+    /* Ticket Card */
+    .ticket-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .ticket-card:hover {
+      border-color: #f97316;
+      box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
+    }
+
+    .ticket-card:active {
+      box-shadow: 0 1px 4px rgba(249, 115, 22, 0.15);
+    }
+
+    .ticket-date {
+      text-align: center;
+      min-width: 52px;
+      width: 52px;
+      flex-shrink: 0;
+    }
+
+    .ticket-date .month {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .ticket-date .day {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.1;
+    }
+
+    .ticket-date .year {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .ticket-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ticket-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .day-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .day-tag.saturday { background: #fef3c7; color: #92400e; }
+    .day-tag.sunday { background: #dcfce7; color: #166534; }
+    .day-tag.friday { background: #fee2e2; color: #991b1b; }
+    .day-tag.sat-sun { background: #fef3c7; color: #92400e; }
+    .day-tag.fri-sun { background: #dbeafe; color: #1e40af; }
+
+    .tickets-left {
+      font-size: 12px;
+      font-weight: 600;
+      color: #4ECBA0;
+    }
+
+    .ticket-perks {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .perk-icon {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .perk-icon.active {
+      border-color: #f97316;
+      color: #f97316;
+    }
+
+    .ticket-price-area {
+      text-align: right;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+
+    .ticket-price-area .from-text {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .ticket-price-area .price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    .bookmark-card {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #d1d5db;
+      font-size: 18px;
+      flex-shrink: 0;
+      padding: 6px;
+      margin-left: 0;
+      align-self: center;
+      transition: color 0.15s;
+      border-radius: 50%;
+    }
+
+    .bookmark-card:hover {
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.06);
+    }
+
+    /* ===== RIGHT PANEL (Map) ===== */
+    .map-panel {
+      flex: 1;
+      position: relative;
+      background: #f9fafb;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .map-panel iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transform-origin: center center;
+      transition: transform 0.25s ease;
+    }
+
+    .map-controls {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .map-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: #374151;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .map-btn {
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #374151;
+      font-size: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .map-btn:hover {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    .map-btn:active {
+      background: #e5e7eb;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .map-panel { display: none; }
+      .packages-panel { max-width: none; min-width: 0; }
+    }
+
+    @media (max-width: 900px) {
+      .top-header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+      .header-right { gap: 8px; }
+      .header-btn span:not(.material-icons-outlined) { display: none; }
+      .event-tags { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .filter-sidebar { display: none; }
+      .packages-panel { min-width: 0; }
+      .main-container { height: calc(100vh - 100px); }
+    }
+
+    @media (max-width: 480px) {
+      .header-btn { padding: 6px 10px; font-size: 12px; }
+      .logo { font-size: 17px; }
+      .event-title-area h1 { font-size: 16px; }
+      .category-group { padding: 0 14px; padding-top: 16px; }
+      .ticket-card { padding: 12px; gap: 10px; }
+      .ticket-price-area .price { font-size: 16px; }
+    }
+
+    /* Divider between header sections */
+    .header-content-left {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOP HEADER ===== -->
+<header class="top-header">
+  <div class="header-left">
+    <div class="logo">
+      <span class="play-icon">&#9654;</span>EventConnect
+    </div>
+    <div class="logo-divider"></div>
+    <div class="header-content-left">
+      <div class="event-title-area">
+        <h1>Monaco Grand Prix</h1>
+        <span class="material-icons-outlined bookmark-icon">bookmark_border</span>
+      </div>
+      <div class="event-tags">
+        <span class="event-tag"><span class="material-icons-outlined">calendar_today</span> Jun 5—7, 2026</span>
+        <span class="event-tag"><span class="material-icons-outlined">emoji_events</span> Formula 1 (2026)</span>
+        <span class="event-tag"><span class="material-icons-outlined">flag</span> Circuit de Monaco</span>
+        <span class="event-tag"><span class="material-icons-outlined">location_on</span> Monte Carlo, Monaco</span>
+      </div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="search-btn" title="Search">
+      <span class="material-icons-outlined">search</span>
+    </button>
+    <button class="header-btn">
+      <span class="material-icons-outlined">support_agent</span> Customer Support
+    </button>
+    <button class="header-btn">
+      <span class="material-icons-outlined">person</span> Tour Bureau LLC
+    </button>
+    <button class="cart-btn" title="Cart">
+      <span class="material-icons-outlined">shopping_cart</span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<nav class="breadcrumb">
+  <a href="#" class="back-link"><span class="material-icons-outlined" style="font-size:16px">arrow_back</span> Back</a>
+  <a href="#"><span class="material-icons-outlined" style="font-size:14px">home</span> Home</a>
+  <span class="sep">›</span>
+  <a href="#">Formula1</a>
+  <span class="sep">›</span>
+  <span class="current">Monaco Grand Prix</span>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-container">
+
+  <!-- LEFT SIDEBAR: Filters -->
+  <aside class="filter-sidebar">
+    <div class="filter-header">
+      <span class="material-icons-outlined">tune</span>
+      Filter and sort 14 categories
+    </div>
+
+    <!-- Sort by -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">sort</span> Sort by
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <select class="filter-select">
+        <option>Price</option>
+        <option>Name (A-Z)</option>
+        <option>Name (Z-A)</option>
+        <option>Availability</option>
+      </select>
+    </div>
+
+    <!-- Price per ticket -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">sell</span> Price per ticket
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <div class="range-slider-container">
+        <div class="range-slider-dual">
+          <div class="range-track-bg"></div>
+          <div class="range-track-fill" id="rangeTrackFill"></div>
+          <input type="range" id="rangeMin" min="0" max="6493" value="0" step="1">
+          <input type="range" id="rangeMax" min="0" max="6493" value="6493" step="1">
+        </div>
+        <div class="price-inputs">
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input type="text" id="priceMinInput" value="0">
+          </div>
+          <span class="price-sep">—</span>
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input type="text" id="priceMaxInput" value="6492.66">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Number of tickets -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">confirmation_number</span> Number of tickets
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <select class="filter-select">
+        <option>Select tickets</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5+</option>
+      </select>
+    </div>
+
+    <!-- Event Days -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">event</span> Event Days
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <span>Friday</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Friday—Sunday</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Saturday</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Saturday—Sunday</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Sunday</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perks -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">star_outline</span> Perks
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <span class="label-with-icon"><span class="material-icons-outlined">weekend</span> Grandstand</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span class="label-with-icon"><span class="material-icons-outlined">local_bar</span> Hospitality</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span class="label-with-icon"><span class="material-icons-outlined">roofing</span> Covered seating</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span class="label-with-icon"><span class="material-icons-outlined">tv</span> Videowall</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span class="label-with-icon"><span class="material-icons-outlined">event_seat</span> Numbered seating</span>
+          <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Available tickets -->
+    <div class="filter-section">
+      <div class="filter-section-title">
+        <span class="icon-left">
+          <span class="material-icons-outlined">inventory_2</span> Available tickets
+        </span>
+        <span class="material-icons-outlined chevron">expand_less</span>
+      </div>
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <span>Show only categories with tickets</span>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="reset-filters">
+      <a href="#" onclick="resetFilters(); return false;">Reset filters</a>
+    </div>
+  </aside>
+
+  <!-- CENTER PANEL: Ticket Packages -->
+  <section class="packages-panel" id="packagesPanel">
+
+    <!-- Saturday Night Yacht Party -->
+    <div class="category-group">
+      <div class="category-name">Saturday Night Yacht Party - Excluding event access</div>
+      <div class="ticket-card" data-category="yacht-party" data-days="saturday" data-price="573.54" data-perks="">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag saturday">Saturday</span>
+            <span class="tickets-left">20 tickets left</span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€573.54</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand O - High -->
+    <div class="category-group">
+      <div class="category-name">
+        Grandstand O - High
+        <span class="our-choice-badge"><span class="material-icons-outlined">verified</span> OUR CHOICE</span>
+      </div>
+      <div class="ticket-card" data-category="grandstand-o" data-days="sunday" data-price="945.00" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sunday">Sunday</span>
+            <span class="tickets-left">10 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€945.00</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+
+      <div class="ticket-card" data-category="grandstand-o" data-days="sat-sun" data-price="1285.00" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">24 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1285.00</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Yoshi Hospitality -->
+    <div class="category-group">
+      <div class="category-name">Yoshi Hospitality</div>
+      <div class="ticket-card" data-category="yoshi" data-days="friday" data-price="1111.11" data-perks="hospitality,covered,videowall">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">5</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag friday">Friday</span>
+            <span class="tickets-left">24 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+            <span class="perk-icon" title="Covered seating"><span class="material-icons-outlined" style="font-size:14px">roofing</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1111.11</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand L -->
+    <div class="category-group">
+      <div class="category-name">Grandstand L</div>
+      <div class="ticket-card" data-category="grandstand-l" data-days="sat-sun" data-price="1255.00" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">15 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1255.00</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand N -->
+    <div class="category-group">
+      <div class="category-name">Grandstand N</div>
+      <div class="ticket-card" data-category="grandstand-n" data-days="sat-sun" data-price="1333.33" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">28 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1333.33</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand B -->
+    <div class="category-group">
+      <div class="category-name">Grandstand B</div>
+      <div class="ticket-card" data-category="grandstand-b" data-days="sat-sun" data-price="1550.00" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left" style="color:#f97316;">8 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Covered seating"><span class="material-icons-outlined" style="font-size:14px">roofing</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1550.00</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand K -->
+    <div class="category-group">
+      <div class="category-name">Grandstand K</div>
+      <div class="ticket-card" data-category="grandstand-k" data-days="sat-sun" data-price="1560.00" data-perks="grandstand,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">23 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€1560.00</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Grandstand T + Heracles Rooftop -->
+    <div class="category-group">
+      <div class="category-name">Grandstand T (Sa+Su) + Heracles Rooftop (Fr)</div>
+      <div class="ticket-card" data-category="grandstand-t" data-days="fri-sun" data-price="2950.75" data-perks="hospitality,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">5-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag fri-sun">Friday—Sunday</span>
+            <span class="tickets-left">10 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€2950.75</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Superyacht Hospitality -->
+    <div class="category-group">
+      <div class="category-name">Superyacht Hospitality</div>
+      <div class="ticket-card" data-category="superyacht" data-days="saturday" data-price="3086.85" data-perks="hospitality">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag saturday">Saturday</span>
+            <span class="tickets-left">14 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€3086.85</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+      <div class="ticket-card" data-category="superyacht" data-days="sunday" data-price="5348.82" data-perks="hospitality">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sunday">Sunday</span>
+            <span class="tickets-left">17 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€5348.82</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Heracles Rooftop C -->
+    <div class="category-group">
+      <div class="category-name">Heracles Rooftop C</div>
+      <div class="ticket-card" data-category="heracles-c" data-days="sat-sun" data-price="5902.34" data-perks="hospitality,videowall">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">10 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€5902.34</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Heracles Rooftop + Superyacht Combo -->
+    <div class="category-group">
+      <div class="category-name">Heracles Rooftop (Saturday) &amp; Superyacht (Sunday) Combination Package</div>
+      <div class="ticket-card" data-category="heracles-superyacht" data-days="sat-sun" data-price="6323.99" data-perks="hospitality,videowall">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left">10 tickets left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€6323.99</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <!-- Caravelles Terrace -->
+    <div class="category-group">
+      <div class="category-name">Caravelles Terrace</div>
+      <div class="ticket-card" data-category="caravelles" data-days="sat-sun" data-price="6492.66" data-perks="hospitality,covered,videowall,numbered">
+        <div class="ticket-date">
+          <div class="month">Jun</div>
+          <div class="day">6-7</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="ticket-info">
+          <div class="ticket-tags">
+            <span class="day-tag sat-sun">Saturday—Sunday</span>
+            <span class="tickets-left" style="color:#ef4444;">1 ticket left</span>
+          </div>
+          <div class="ticket-perks">
+            <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
+            <span class="perk-icon" title="Covered seating"><span class="material-icons-outlined" style="font-size:14px">roofing</span></span>
+            <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
+            <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
+          </div>
+        </div>
+        <div class="ticket-price-area">
+          <div class="from-text">From</div>
+          <div class="price">€6492.66</div>
+        </div>
+        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
+      </div>
+    </div>
+
+    <div style="height: 40px;"></div>
+  </section>
+
+  <!-- RIGHT PANEL: Map -->
+  <div class="map-panel">
+    <div class="map-controls">
+      <div class="map-toggle">
+        Legend
+        <label class="toggle-switch"><input type="checkbox" id="legendToggle"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="map-toggle">
+        Map details
+        <label class="toggle-switch"><input type="checkbox" id="mapDetailsToggle"><span class="toggle-slider"></span></label>
+      </div>
+      <button class="map-btn" title="Reset view" onclick="resetMap()">
+        <span class="material-icons-outlined" style="font-size:18px">refresh</span>
+      </button>
+      <button class="map-btn" title="Zoom in" onclick="zoomMap(1)">
+        <span class="material-icons-outlined" style="font-size:18px">add</span>
+      </button>
+      <button class="map-btn" title="Zoom out" onclick="zoomMap(-1)">
+        <span class="material-icons-outlined" style="font-size:18px">remove</span>
+      </button>
+    </div>
+    <iframe src="map.html" id="mapFrame" title="Circuit Map"></iframe>
+  </div>
+
+</div>
+
+<script>
+  // ===== PRICE RANGE SLIDER =====
+  const rangeMin = document.getElementById('rangeMin');
+  const rangeMax = document.getElementById('rangeMax');
+  const trackFill = document.getElementById('rangeTrackFill');
+  const priceMinInput = document.getElementById('priceMinInput');
+  const priceMaxInput = document.getElementById('priceMaxInput');
+  const PRICE_MAX = 6493;
+
+  function updateRangeTrack() {
+    const minVal = parseInt(rangeMin.value);
+    const maxVal = parseInt(rangeMax.value);
+    const leftPct = (minVal / PRICE_MAX) * 100;
+    const rightPct = (maxVal / PRICE_MAX) * 100;
+    trackFill.style.left = leftPct + '%';
+    trackFill.style.width = (rightPct - leftPct) + '%';
+  }
+
+  rangeMin.addEventListener('input', () => {
+    if (parseInt(rangeMin.value) >= parseInt(rangeMax.value)) {
+      rangeMin.value = parseInt(rangeMax.value) - 1;
+    }
+    priceMinInput.value = rangeMin.value;
+    updateRangeTrack();
+    applyFilters();
+  });
+
+  rangeMax.addEventListener('input', () => {
+    if (parseInt(rangeMax.value) <= parseInt(rangeMin.value)) {
+      rangeMax.value = parseInt(rangeMin.value) + 1;
+    }
+    priceMaxInput.value = parseInt(rangeMax.value) >= PRICE_MAX ? '6492.66' : rangeMax.value;
+    updateRangeTrack();
+    applyFilters();
+  });
+
+  priceMinInput.addEventListener('change', () => {
+    const val = Math.max(0, Math.min(parseInt(priceMinInput.value) || 0, PRICE_MAX - 1));
+    rangeMin.value = val;
+    priceMinInput.value = val;
+    updateRangeTrack();
+    applyFilters();
+  });
+
+  priceMaxInput.addEventListener('change', () => {
+    const val = Math.max(1, Math.min(parseFloat(priceMaxInput.value) || PRICE_MAX, PRICE_MAX));
+    rangeMax.value = Math.round(val);
+    updateRangeTrack();
+    applyFilters();
+  });
+
+  updateRangeTrack();
+
+  // ===== COLLAPSIBLE SECTIONS =====
+  document.querySelectorAll('.filter-section-title').forEach(title => {
+    title.addEventListener('click', () => {
+      const content = title.nextElementSibling;
+      const chevron = title.querySelector('.chevron');
+      if (content) {
+        const isHidden = content.style.display === 'none';
+        content.style.display = isHidden ? '' : 'none';
+        if (chevron) chevron.textContent = isHidden ? 'expand_less' : 'expand_more';
+      }
+    });
+  });
+
+  // ===== DAY FILTER TOGGLES =====
+  const dayFilters = {
+    friday: false,
+    'fri-sun': false,
+    saturday: false,
+    'sat-sun': false,
+    sunday: false
+  };
+
+  const dayToggleItems = document.querySelectorAll('.filter-section')[3].querySelectorAll('.toggle-switch input');
+  const dayKeys = ['friday', 'fri-sun', 'saturday', 'sat-sun', 'sunday'];
+
+  dayToggleItems.forEach((toggle, index) => {
+    toggle.addEventListener('change', () => {
+      dayFilters[dayKeys[index]] = toggle.checked;
+      applyFilters();
+    });
+  });
+
+  // ===== PERK FILTER TOGGLES =====
+  const perkFilters = {
+    grandstand: false,
+    hospitality: false,
+    covered: false,
+    videowall: false,
+    numbered: false
+  };
+
+  const perkToggleItems = document.querySelectorAll('.filter-section')[4].querySelectorAll('.toggle-switch input');
+  const perkKeys = ['grandstand', 'hospitality', 'covered', 'videowall', 'numbered'];
+
+  perkToggleItems.forEach((toggle, index) => {
+    toggle.addEventListener('change', () => {
+      perkFilters[perkKeys[index]] = toggle.checked;
+      applyFilters();
+    });
+  });
+
+  // ===== SORT =====
+  const sortSelect = document.querySelector('.filter-select');
+  sortSelect.addEventListener('change', applyFilters);
+
+  // ===== APPLY FILTERS =====
+  function applyFilters() {
+    const minPrice = parseFloat(priceMinInput.value) || 0;
+    const maxPrice = parseFloat(priceMaxInput.value) || Infinity;
+
+    const activeDays = Object.entries(dayFilters).filter(([_, v]) => v).map(([k]) => k);
+    const activePerks = Object.entries(perkFilters).filter(([_, v]) => v).map(([k]) => k);
+
+    const categoryGroups = document.querySelectorAll('.category-group');
+
+    categoryGroups.forEach(group => {
+      const cards = group.querySelectorAll('.ticket-card');
+      let anyVisible = false;
+
+      cards.forEach(card => {
+        const price = parseFloat(card.dataset.price);
+        const days = card.dataset.days;
+        const perks = card.dataset.perks ? card.dataset.perks.split(',') : [];
+
+        let show = true;
+
+        if (price < minPrice || price > maxPrice) show = false;
+        if (activeDays.length > 0 && !activeDays.includes(days)) show = false;
+        if (activePerks.length > 0) {
+          const hasAllPerks = activePerks.every(p => perks.includes(p));
+          if (!hasAllPerks) show = false;
+        }
+
+        card.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
+      });
+
+      group.style.display = anyVisible ? '' : 'none';
+    });
+
+    // Sort
+    const sortValue = sortSelect.value;
+    const panel = document.getElementById('packagesPanel');
+    const groups = Array.from(panel.querySelectorAll('.category-group'));
+
+    if (sortValue === 'Price') {
+      groups.sort((a, b) => getMinPrice(a) - getMinPrice(b));
+    } else if (sortValue === 'Name (A-Z)') {
+      groups.sort((a, b) => getName(a).localeCompare(getName(b)));
+    } else if (sortValue === 'Name (Z-A)') {
+      groups.sort((a, b) => getName(b).localeCompare(getName(a)));
+    }
+
+    groups.forEach(g => panel.appendChild(g));
+  }
+
+  function getMinPrice(group) {
+    let min = Infinity;
+    group.querySelectorAll('.ticket-card').forEach(c => {
+      const p = parseFloat(c.dataset.price);
+      if (p < min) min = p;
+    });
+    return min;
+  }
+
+  function getName(group) {
+    return group.querySelector('.category-name').textContent.trim();
+  }
+
+  // ===== RESET =====
+  function resetFilters() {
+    dayToggleItems.forEach((t, i) => { t.checked = false; dayFilters[dayKeys[i]] = false; });
+    perkToggleItems.forEach((t, i) => { t.checked = false; perkFilters[perkKeys[i]] = false; });
+
+    priceMinInput.value = '0';
+    priceMaxInput.value = '6492.66';
+    rangeMin.value = 0;
+    rangeMax.value = PRICE_MAX;
+    updateRangeTrack();
+
+    sortSelect.value = 'Price';
+
+    document.querySelectorAll('.category-group').forEach(g => g.style.display = '');
+    document.querySelectorAll('.ticket-card').forEach(c => c.style.display = '');
+  }
+
+  // ===== MAP CONTROLS =====
+  let mapZoom = 1;
+
+  function zoomMap(direction) {
+    mapZoom += direction * 0.25;
+    mapZoom = Math.max(0.5, Math.min(3, mapZoom));
+    const frame = document.getElementById('mapFrame');
+    frame.style.transform = 'scale(' + mapZoom + ')';
+  }
+
+  function resetMap() {
+    mapZoom = 1;
+    const frame = document.getElementById('mapFrame');
+    frame.style.transform = 'scale(1)';
+  }
+
+  // ===== BOOKMARK TOGGLE =====
+  document.querySelectorAll('.bookmark-card').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const icon = btn.querySelector('.material-icons-outlined');
+      if (icon.textContent === 'bookmark_border') {
+        icon.textContent = 'bookmark';
+        icon.style.color = '#f97316';
+      } else {
+        icon.textContent = 'bookmark_border';
+        icon.style.color = '';
+      }
+    });
+  });
+
+  // ===== HEADER BOOKMARK =====
+  document.querySelector('.bookmark-icon').addEventListener('click', function() {
+    if (this.textContent === 'bookmark_border') {
+      this.textContent = 'bookmark';
+      this.style.color = '#f97316';
+    } else {
+      this.textContent = 'bookmark_border';
+      this.style.color = '#9ca3af';
+    }
+  });
+</script>
+
+</body>
+</html>
