@@ -818,6 +818,373 @@
       display: flex;
       flex-direction: column;
     }
+
+    /* ===== DETAIL VIEW ===== */
+    .detail-panel {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+      background: #fff;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    .detail-panel.active {
+      display: block;
+    }
+
+    .detail-panel::-webkit-scrollbar { width: 5px; }
+    .detail-panel::-webkit-scrollbar-track { background: transparent; }
+    .detail-panel::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    .detail-panel::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 24px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: color 0.15s;
+    }
+
+    .detail-back:hover { color: #f97316; }
+    .detail-back .material-icons-outlined { font-size: 18px; }
+
+    /* Image Carousel */
+    .detail-carousel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .detail-carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.85);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #374151;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: background 0.15s, transform 0.15s;
+      z-index: 5;
+    }
+
+    .carousel-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+
+    /* Detail Content */
+    .detail-content {
+      padding: 24px;
+    }
+
+    .detail-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    /* Ticket Selector Row */
+    .ticket-selector-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .ticket-qty-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 10px 14px;
+      flex: 1;
+      font-size: 14px;
+      color: #374151;
+      background: #fff;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.2s;
+    }
+
+    .ticket-qty-select.open {
+      border-color: #3b82f6;
+    }
+
+    .ticket-qty-select .material-icons-outlined {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .ticket-qty-select .selected-value {
+      flex: 1;
+    }
+
+    .ticket-qty-select .select-arrow {
+      font-size: 18px;
+      color: #374151;
+    }
+
+    .qty-dropdown-list {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    /* By default open upwards */
+    .qty-dropdown-list.open-up {
+      bottom: calc(100% + 4px);
+      transform: translateY(10px);
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    }
+    .ticket-qty-select.open .qty-dropdown-list.open-up {
+      transform: translateY(0);
+    }
+
+    /* Option to open downwards */
+    .qty-dropdown-list.open-down {
+      top: calc(100% + 4px);
+      transform: translateY(-10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .ticket-qty-select.open .qty-dropdown-list.open-down {
+      transform: translateY(0);
+    }
+
+    .ticket-qty-select.open .qty-dropdown-list {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .qty-dropdown-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .qty-dropdown-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 6px;
+      margin: 4px;
+    }
+    .qty-dropdown-list::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 6px;
+    }
+
+    .qty-dropdown-item {
+      padding: 12px 14px;
+      font-size: 15px;
+      color: #374151;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .qty-dropdown-item:hover {
+      background: #f9fafb;
+    }
+
+    .qty-dropdown-item.selected {
+      background: #A0DDBF;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .qty-dropdown-item.selected .check-icon {
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .qty-dropdown-item.group-request {
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .detail-price-display {
+      font-size: 16px;
+      color: #374151;
+      white-space: nowrap;
+    }
+
+    .detail-price-display .price-amount {
+      font-weight: 700;
+      color: #111;
+      font-size: 18px;
+    }
+
+    .detail-tickets-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4ECBA0;
+      margin-bottom: 16px;
+    }
+
+    .detail-tickets-left .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ECBA0;
+      flex-shrink: 0;
+    }
+
+    /* Add to Cart Button */
+    .add-to-cart-btn {
+      width: 100%;
+      padding: 14px 24px;
+      background: #4ECBA0;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+      margin-bottom: 28px;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #3dba91;
+    }
+
+    .add-to-cart-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* Description */
+    .detail-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .detail-description {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .detail-description ul {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+
+    .detail-description ul li {
+      margin-bottom: 4px;
+      color: #374151;
+    }
+
+    .detail-description .note {
+      color: #6b7280;
+      font-style: italic;
+      margin-top: 12px;
+    }
+
+    /* Event Information Table */
+    .event-info-table {
+      width: 100%;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 24px;
+    }
+
+    .event-info-table .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
+    }
+
+    .event-info-table .info-row:nth-child(odd) {
+      background: #f9fafb;
+      margin: 0 -24px;
+      padding: 12px 24px;
+    }
+
+    .event-info-table .info-row:nth-child(even) {
+      margin: 0 -24px;
+      padding: 12px 24px;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #111;
+      flex-shrink: 0;
+    }
+
+    .info-value {
+      text-align: right;
+      color: #374151;
+    }
+
+    /* Hide listing panels when detail is active */
+    body.detail-active .filter-sidebar,
+    body.detail-active .packages-panel {
+      display: none;
+    }
+
+    @media (max-width: 1200px) {
+      .detail-panel.active + .map-panel { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .detail-content { padding: 16px; }
+      .detail-title { font-size: 17px; }
+      .ticket-selector-row { flex-direction: column; align-items: stretch; }
+    }
   </style>
 </head>
 <body>
@@ -1409,6 +1776,59 @@
     <div style="height: 40px;"></div>
   </section>
 
+  <!-- DETAIL VIEW PANEL (hidden by default) -->
+  <section class="detail-panel" id="detailPanel">
+    <button class="detail-back" id="backToTickets">
+      <span class="material-icons-outlined">chevron_left</span> Back to tickets
+    </button>
+
+    <div class="detail-carousel" id="detailCarousel">
+      <img id="carouselImg" src="" alt="Package image">
+      <button class="carousel-btn prev" id="carouselPrev">
+        <span class="material-icons-outlined">chevron_left</span>
+      </button>
+      <button class="carousel-btn next" id="carouselNext">
+        <span class="material-icons-outlined">chevron_right</span>
+      </button>
+    </div>
+
+    <div class="detail-content">
+      <h2 class="detail-title" id="detailTitle"></h2>
+
+      <div class="ticket-selector-row">
+        <div class="ticket-qty-select" id="qtyDropdownContainer" tabindex="0">
+          <span class="material-icons-outlined">confirmation_number</span>
+          <div class="selected-value" id="qtySelectedText">1 tickets</div>
+          <span class="material-icons-outlined select-arrow">unfold_more</span>
+          
+          <div class="qty-dropdown-list open-up" id="qtyDropdownList">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+        <div class="detail-price-display">
+          <span id="detailQtyLabel">1</span> X <span class="price-amount" id="detailUnitPrice">€0</span>
+        </div>
+      </div>
+
+      <div class="detail-tickets-left">
+        <span class="dot"></span>
+        <span id="detailTicketsLeft">20 tickets left</span>
+      </div>
+
+      <button class="add-to-cart-btn" id="addToCartBtn">
+        Add to cart <span class="material-icons-outlined" style="font-size:20px">chevron_right</span>
+      </button>
+
+      <div id="detailDescriptionArea">
+        <!-- Populated by JS -->
+      </div>
+
+      <div id="detailEventInfo">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
   <!-- RIGHT PANEL: Map -->
   <div class="map-panel">
     <div class="map-controls">
@@ -1664,6 +2084,214 @@
       this.textContent = 'bookmark_border';
       this.style.color = '#9ca3af';
     }
+  });
+
+  // ===== PACKAGE DETAIL DATA =====
+  const packageDetails = {
+    'yacht-party': {
+      title: 'Saturday Night Yacht Party - Excluding event access (Saturday)',
+      price: 573.54,
+      ticketsLeft: 20,
+      images: [
+        'assets/image1.jpeg',
+        'assets/image2.jpeg'
+      ],
+      description: `<p>Step aboard for one of the most sought-after evenings of the Monaco Grand Prix weekend with exclusive access to the Saturday Night Privilege VIP Yacht Party. Set against the illuminated harbour and the electric atmosphere of Monaco after qualifying, this unforgettable night combines world-class hospitality, music and glamour on the water. Enjoy a stylish social setting with all-inclusive drinks, refined canapés and live entertainment as the harbour comes alive around you. This is Monaco at its most iconic, where Formula One meets high society.</p>
+      <ul>
+        <li>Access to the Saturday Night Privilege VIP Yacht Party</li>
+        <li>All-inclusive champagne, beers, wines, soft drinks and canapes</li>
+        <li>DJ and live entertainment throughout the evening</li>
+      </ul>
+      <p class="note">Please note: You need a valid event ticket if you wish to access the qualifying on Saturday. The party is only accesible with access to the circuit on Saturday.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' }
+      ]
+    }
+  };
+
+  // ===== DETAIL VIEW LOGIC =====
+  const detailPanel = document.getElementById('detailPanel');
+  const backToTicketsBtn = document.getElementById('backToTickets');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailUnitPrice = document.getElementById('detailUnitPrice');
+  const detailQtyLabel = document.getElementById('detailQtyLabel');
+  const qtyDropdownContainer = document.getElementById('qtyDropdownContainer');
+  const qtySelectedText = document.getElementById('qtySelectedText');
+  const qtyDropdownList = document.getElementById('qtyDropdownList');
+  const detailTicketsLeft = document.getElementById('detailTicketsLeft');
+  const carouselImg = document.getElementById('carouselImg');
+  const detailDescriptionArea = document.getElementById('detailDescriptionArea');
+  const detailEventInfo = document.getElementById('detailEventInfo');
+
+  let currentImages = [];
+  let currentImageIndex = 0;
+  let currentPackagePrice = 0;
+
+  function openPackageDetail(categoryKey) {
+    const pkg = packageDetails[categoryKey];
+    if (!pkg) return;
+
+    // Populate content
+    detailTitle.textContent = pkg.title;
+    currentPackagePrice = pkg.price;
+    detailUnitPrice.textContent = '€' + pkg.price.toFixed(2);
+    detailQtyLabel.textContent = '1';
+
+    // Populate qty dropdown dynamically
+    qtyDropdownList.innerHTML = '';
+    
+    for (let i = 1; i <= pkg.ticketsLeft; i++) {
+      const item = document.createElement('div');
+      item.className = 'qty-dropdown-item' + (i === 1 ? ' selected' : '');
+      item.dataset.value = i;
+      
+      const textSpan = document.createElement('span');
+      textSpan.textContent = i + ' tickets (€' + pkg.price.toFixed(2) + ' per ticket)';
+      item.appendChild(textSpan);
+      
+      if (i === 1) {
+        const checkIcon = document.createElement('span');
+        checkIcon.className = 'material-icons-outlined check-icon';
+        checkIcon.textContent = 'check';
+        item.appendChild(checkIcon);
+      }
+      
+      qtyDropdownList.appendChild(item);
+    }
+    
+    // Add Group request option
+    const groupOpt = document.createElement('div');
+    groupOpt.className = 'qty-dropdown-item group-request';
+    groupOpt.dataset.value = 'group';
+    groupOpt.innerHTML = '<span>Group request</span>';
+    qtyDropdownList.appendChild(groupOpt);
+
+    qtySelectedText.textContent = '1 tickets';
+    detailTicketsLeft.textContent = pkg.ticketsLeft + ' tickets left';
+
+    // Carousel
+    currentImages = pkg.images;
+    currentImageIndex = 0;
+    carouselImg.src = currentImages[0];
+    carouselImg.alt = pkg.title;
+
+    // Description
+    detailDescriptionArea.innerHTML = '<h3 class="detail-section-title">Description</h3><div class="detail-description">' + pkg.description + '</div>';
+
+    // Event Info
+    let infoHTML = '<h3 class="detail-section-title" style="margin-top:8px;">Event information</h3><div class="event-info-table">';
+    pkg.eventInfo.forEach(row => {
+      infoHTML += '<div class="info-row"><span class="info-label">' + row.label + '</span><span class="info-value">' + row.value + '</span></div>';
+    });
+    infoHTML += '</div>';
+    detailEventInfo.innerHTML = infoHTML;
+
+    // Show detail, hide listing
+    document.body.classList.add('detail-active');
+    detailPanel.classList.add('active');
+    detailPanel.scrollTop = 0;
+  }
+
+  function closePackageDetail() {
+    document.body.classList.remove('detail-active');
+    detailPanel.classList.remove('active');
+  }
+
+  backToTicketsBtn.addEventListener('click', closePackageDetail);
+
+  // Carousel navigation
+  document.getElementById('carouselPrev').addEventListener('click', () => {
+    if (currentImages.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+    carouselImg.src = currentImages[currentImageIndex];
+  });
+
+  document.getElementById('carouselNext').addEventListener('click', () => {
+    if (currentImages.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+    carouselImg.src = currentImages[currentImageIndex];
+  });
+
+  // Quantity dropdown interaction
+  qtyDropdownContainer.addEventListener('click', (e) => {
+    const item = e.target.closest('.qty-dropdown-item');
+    if (item) {
+      // Update Selection
+      qtyDropdownList.querySelectorAll('.qty-dropdown-item').forEach(el => {
+        el.classList.remove('selected');
+        const check = el.querySelector('.check-icon');
+        if (check) check.remove();
+      });
+      
+      item.classList.add('selected');
+      if (item.dataset.value !== 'group') {
+        const checkIcon = document.createElement('span');
+        checkIcon.className = 'material-icons-outlined check-icon';
+        checkIcon.textContent = 'check';
+        item.appendChild(checkIcon);
+      }
+      
+      const val = item.dataset.value;
+      if (val === 'group') {
+        qtySelectedText.textContent = 'Group request';
+        detailQtyLabel.textContent = 'Group';
+        detailUnitPrice.textContent = 'Request';
+      } else {
+        qtySelectedText.textContent = val + ' tickets';
+        detailQtyLabel.textContent = val;
+        detailUnitPrice.textContent = '€' + currentPackagePrice.toFixed(2);
+      }
+      
+      qtyDropdownContainer.classList.remove('open');
+      e.stopPropagation();
+      return;
+    }
+    
+    // Toggle dropdown
+    const isOpening = !qtyDropdownContainer.classList.contains('open');
+    if (isOpening) {
+      // Calculate position dynamically to avoid cutting off
+      const rect = qtyDropdownContainer.getBoundingClientRect();
+      const dropdownHeight = 250; // max-height of dropdown
+      const spaceAbove = rect.top;
+      const spaceBelow = window.innerHeight - rect.bottom;
+
+      qtyDropdownList.classList.remove('open-up', 'open-down');
+      
+      // Default to opening down if there's enough space, otherwise open up
+      if (spaceBelow > dropdownHeight || spaceBelow > spaceAbove) {
+        qtyDropdownList.classList.add('open-down');
+      } else {
+        qtyDropdownList.classList.add('open-up');
+      }
+    }
+    
+    qtyDropdownContainer.classList.toggle('open');
+  });
+
+  // Close when clicked outside
+  document.addEventListener('click', (e) => {
+    if (!qtyDropdownContainer.contains(e.target)) {
+       qtyDropdownContainer.classList.remove('open');
+    }
+  });
+
+  // Attach click to ticket cards
+  document.querySelectorAll('.ticket-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Don't open detail if clicking bookmark
+      if (e.target.closest('.bookmark-card')) return;
+      const category = card.dataset.category;
+      if (packageDetails[category]) {
+        openPackageDetail(category);
+      }
+    });
   });
 </script>
 
