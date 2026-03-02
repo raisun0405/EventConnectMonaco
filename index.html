@@ -1255,6 +1255,8 @@
       </div>
       <select class="filter-select">
         <option>Price</option>
+        <option>Price (Low to High)</option>
+        <option>Price (High to Low)</option>
         <option>Name (A-Z)</option>
         <option>Name (Z-A)</option>
         <option>Availability</option>
@@ -2003,8 +2005,10 @@
     const panel = document.getElementById('packagesPanel');
     const groups = Array.from(panel.querySelectorAll('.category-group'));
 
-    if (sortValue === 'Price') {
+    if (sortValue === 'Price' || sortValue === 'Price (Low to High)') {
       groups.sort((a, b) => getMinPrice(a) - getMinPrice(b));
+    } else if (sortValue === 'Price (High to Low)') {
+      groups.sort((a, b) => getMinPrice(b) - getMinPrice(a));
     } else if (sortValue === 'Name (A-Z)') {
       groups.sort((a, b) => getName(a).localeCompare(getName(b)));
     } else if (sortValue === 'Name (Z-A)') {
