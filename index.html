@@ -771,23 +771,11 @@
       white-space: nowrap;
     }
 
-    .bookmark-card {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #d1d5db;
-      font-size: 18px;
-      flex-shrink: 0;
-      padding: 6px;
-      margin-left: 0;
-      align-self: center;
-      transition: color 0.15s;
-      border-radius: 50%;
-    }
-
-    .bookmark-card:hover {
-      color: #f97316;
-      background: rgba(249, 115, 22, 0.06);
+    .onwards {
+      font-size: 11px;
+      font-weight: 400;
+      color: #6b7280;
+      text-transform: lowercase;
     }
 
     /* ===== RIGHT PANEL (Map) ===== */
@@ -1344,8 +1332,8 @@
         <div class="range-slider-dual">
           <div class="range-track-bg"></div>
           <div class="range-track-fill" id="rangeTrackFill"></div>
-          <input type="range" id="rangeMin" min="0" max="6493" value="0" step="1">
-          <input type="range" id="rangeMax" min="0" max="6493" value="6493" step="1">
+          <input type="range" id="rangeMin" min="0" max="7467" value="0" step="1">
+          <input type="range" id="rangeMax" min="0" max="7467" value="7467" step="1">
         </div>
         <div class="price-inputs">
           <div class="price-input-group">
@@ -1355,28 +1343,8 @@
           <span class="price-sep">—</span>
           <div class="price-input-group">
             <span class="currency">€</span>
-            <input type="text" id="priceMaxInput" value="6492.66">
+            <input type="text" id="priceMaxInput" value="7466.56">
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Number of tickets -->
-    <div class="filter-section">
-      <div class="filter-section-title">
-        <span class="icon-left">
-          <span class="material-icons-outlined">confirmation_number</span> Number of tickets
-        </span>
-        <span class="material-icons-outlined chevron">expand_less</span>
-      </div>
-      <div class="ticket-filter-dropdown" id="ticketFilterContainer" tabindex="0">
-        <span class="material-icons-outlined input-icon">confirmation_number</span>
-        <div class="selected-value" id="ticketFilterSelectedText">Select tickets</div>
-        <span class="material-icons-outlined clear-icon" id="ticketFilterClear" style="display:none;">close</span>
-        <span class="material-icons-outlined select-arrow">unfold_more</span>
-        
-        <div class="ticket-dropdown-list open-down" id="ticketFilterList">
-          <!-- Populated dynamically (1 to 50) -->
         </div>
       </div>
     </div>
@@ -1472,7 +1440,7 @@
     <!-- Saturday Night Yacht Party -->
     <div class="category-group">
       <div class="category-name">Saturday Night Yacht Party - Excluding event access</div>
-      <div class="ticket-card" data-category="yacht-party" data-days="saturday" data-price="573.54" data-perks="" data-tickets="20">
+      <div class="ticket-card" data-category="yacht-party" data-days="saturday" data-price="659.57" data-perks="">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6</div>
@@ -1481,14 +1449,13 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag saturday">Saturday</span>
-            <span class="tickets-left">20 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€573.54</div>
+          <div class="price">€659.57 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
@@ -1498,7 +1465,7 @@
         Grandstand O - High
         <span class="our-choice-badge"><span class="material-icons-outlined">verified</span> OUR CHOICE</span>
       </div>
-      <div class="ticket-card" data-category="grandstand-o" data-days="sunday" data-price="945.00" data-perks="grandstand,videowall,numbered" data-tickets="10">
+      <div class="ticket-card" data-category="grandstand-o" data-days="sunday" data-price="1086.75" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">7</div>
@@ -1507,7 +1474,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sunday">Sunday</span>
-            <span class="tickets-left">10 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1517,12 +1484,11 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€945.00</div>
+          <div class="price">€1,086.75 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
 
-      <div class="ticket-card" data-category="grandstand-o" data-days="sat-sun" data-price="1285.00" data-perks="grandstand,videowall,numbered" data-tickets="24">
+      <div class="ticket-card" data-category="grandstand-o" data-days="sat-sun" data-price="1477.75" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1531,7 +1497,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">24 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1541,16 +1507,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1285.00</div>
+          <div class="price">€1,477.75 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Yoshi Hospitality -->
     <div class="category-group">
       <div class="category-name">Yoshi Hospitality</div>
-      <div class="ticket-card" data-category="yoshi" data-days="friday" data-price="1111.11" data-perks="hospitality,covered,videowall" data-tickets="24">
+      <div class="ticket-card" data-category="yoshi" data-days="friday" data-price="1277.78" data-perks="hospitality,covered,videowall">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">5</div>
@@ -1559,7 +1524,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag friday">Friday</span>
-            <span class="tickets-left">24 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1569,16 +1534,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1111.11</div>
+          <div class="price">€1,277.78 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Grandstand L -->
     <div class="category-group">
       <div class="category-name">Grandstand L</div>
-      <div class="ticket-card" data-category="grandstand-l" data-days="sat-sun" data-price="1255.00" data-perks="grandstand,videowall,numbered" data-tickets="15">
+      <div class="ticket-card" data-category="grandstand-l" data-days="sat-sun" data-price="1443.25" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1587,7 +1551,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">15 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1597,16 +1561,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1255.00</div>
+          <div class="price">€1,443.25 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Grandstand N -->
     <div class="category-group">
       <div class="category-name">Grandstand N</div>
-      <div class="ticket-card" data-category="grandstand-n" data-days="sat-sun" data-price="1333.33" data-perks="grandstand,videowall,numbered" data-tickets="28">
+      <div class="ticket-card" data-category="grandstand-n" data-days="sat-sun" data-price="1533.33" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1615,7 +1578,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">28 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1625,16 +1588,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1333.33</div>
+          <div class="price">€1,533.33 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Grandstand B -->
     <div class="category-group">
       <div class="category-name">Grandstand B</div>
-      <div class="ticket-card" data-category="grandstand-b" data-days="sat-sun" data-price="1550.00" data-perks="grandstand,videowall,numbered" data-tickets="8">
+      <div class="ticket-card" data-category="grandstand-b" data-days="sat-sun" data-price="1782.50" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1643,7 +1605,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left" style="color:#f97316;">8 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1654,16 +1616,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1550.00</div>
+          <div class="price">€1,782.50 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Grandstand K -->
     <div class="category-group">
       <div class="category-name">Grandstand K</div>
-      <div class="ticket-card" data-category="grandstand-k" data-days="sat-sun" data-price="1560.00" data-perks="grandstand,videowall,numbered" data-tickets="23">
+      <div class="ticket-card" data-category="grandstand-k" data-days="sat-sun" data-price="1794.00" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1672,7 +1633,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">23 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
@@ -1682,16 +1643,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€1560.00</div>
+          <div class="price">€1,794.00 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Grandstand T + Heracles Rooftop -->
     <div class="category-group">
       <div class="category-name">Grandstand T (Sa+Su) + Heracles Rooftop (Fr)</div>
-      <div class="ticket-card" data-category="grandstand-t" data-days="fri-sun" data-price="2950.75" data-perks="hospitality,videowall,numbered" data-tickets="10">
+      <div class="ticket-card" data-category="grandstand-t" data-days="fri-sun" data-price="3393.36" data-perks="hospitality,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">5-7</div>
@@ -1700,7 +1660,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag fri-sun">Friday—Sunday</span>
-            <span class="tickets-left">10 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1710,16 +1670,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€2950.75</div>
+          <div class="price">€3,393.36 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Superyacht Hospitality -->
     <div class="category-group">
       <div class="category-name">Superyacht Hospitality</div>
-      <div class="ticket-card" data-category="superyacht" data-days="saturday" data-price="3086.85" data-perks="hospitality" data-tickets="14">
+      <div class="ticket-card" data-category="superyacht" data-days="saturday" data-price="3549.88" data-perks="hospitality">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6</div>
@@ -1728,7 +1687,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag saturday">Saturday</span>
-            <span class="tickets-left">14 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1736,11 +1695,10 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€3086.85</div>
+          <div class="price">€3,549.88 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
-      <div class="ticket-card" data-category="superyacht" data-days="sunday" data-price="5348.82" data-perks="hospitality" data-tickets="17">
+      <div class="ticket-card" data-category="superyacht" data-days="sunday" data-price="6151.14" data-perks="hospitality">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">7</div>
@@ -1749,7 +1707,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sunday">Sunday</span>
-            <span class="tickets-left">17 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1757,16 +1715,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€5348.82</div>
+          <div class="price">€6,151.14 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Heracles Rooftop C -->
     <div class="category-group">
       <div class="category-name">Heracles Rooftop C</div>
-      <div class="ticket-card" data-category="heracles-c" data-days="sat-sun" data-price="5902.34" data-perks="hospitality,videowall" data-tickets="10">
+      <div class="ticket-card" data-category="heracles-c" data-days="sat-sun" data-price="6787.69" data-perks="hospitality,videowall">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1775,7 +1732,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">10 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1784,16 +1741,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€5902.34</div>
+          <div class="price">€6,787.69 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Heracles Rooftop + Superyacht Combo -->
     <div class="category-group">
       <div class="category-name">Heracles Rooftop (Saturday) &amp; Superyacht (Sunday) Combination Package</div>
-      <div class="ticket-card" data-category="heracles-superyacht" data-days="sat-sun" data-price="6323.99" data-perks="hospitality,videowall" data-tickets="10">
+      <div class="ticket-card" data-category="heracles-superyacht" data-days="sat-sun" data-price="7272.59" data-perks="hospitality,videowall">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1802,7 +1758,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left">10 tickets left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1811,16 +1767,15 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€6323.99</div>
+          <div class="price">€7,272.59 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
     <!-- Caravelles Terrace -->
     <div class="category-group">
       <div class="category-name">Caravelles Terrace</div>
-      <div class="ticket-card" data-category="caravelles" data-days="sat-sun" data-price="6492.66" data-perks="hospitality,covered,videowall,numbered" data-tickets="1">
+      <div class="ticket-card" data-category="caravelles" data-days="sat-sun" data-price="7466.56" data-perks="hospitality,covered,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1829,7 +1784,7 @@
         <div class="ticket-info">
           <div class="ticket-tags">
             <span class="day-tag sat-sun">Saturday—Sunday</span>
-            <span class="tickets-left" style="color:#ef4444;">1 ticket left</span>
+            <span class="tickets-left">Subject to availability</span>
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Hospitality"><span class="material-icons-outlined" style="font-size:14px">local_bar</span></span>
@@ -1840,9 +1795,8 @@
         </div>
         <div class="ticket-price-area">
           <div class="from-text">From</div>
-          <div class="price">€6492.66</div>
+          <div class="price">€7,466.56 <span class="onwards">onwards</span></div>
         </div>
-        <button class="bookmark-card"><span class="material-icons-outlined">bookmark_border</span></button>
       </div>
     </div>
 
@@ -1929,78 +1883,13 @@
 </div>
 
 <script>
-  let minTicketsRequired = 0;
-
-  // ===== TICKET COUNT FILTER =====
-  const ticketFilterContainer = document.getElementById('ticketFilterContainer');
-  const ticketFilterSelectedText = document.getElementById('ticketFilterSelectedText');
-  const ticketFilterList = document.getElementById('ticketFilterList');
-  const ticketFilterClear = document.getElementById('ticketFilterClear');
-
-  // Populate ticket filter list 1 to 50
-  for (let i = 1; i <= 50; i++) {
-    const item = document.createElement('div');
-    item.className = 'ticket-dropdown-item';
-    item.dataset.value = i;
-    item.textContent = i + ' tickets';
-    ticketFilterList.appendChild(item);
-  }
-
-  ticketFilterContainer.addEventListener('click', (e) => {
-    // Handle clearing
-    if (e.target.closest('.clear-icon')) {
-      minTicketsRequired = 0;
-      ticketFilterSelectedText.textContent = 'Select tickets';
-      ticketFilterClear.style.display = 'none';
-      ticketFilterList.querySelectorAll('.ticket-dropdown-item').forEach(el => el.classList.remove('selected'));
-      applyFilters();
-      e.stopPropagation();
-      return;
-    }
-
-    const item = e.target.closest('.ticket-dropdown-item');
-    if (item) {
-      ticketFilterList.querySelectorAll('.ticket-dropdown-item').forEach(el => el.classList.remove('selected'));
-      item.classList.add('selected');
-      minTicketsRequired = parseInt(item.dataset.value);
-      ticketFilterSelectedText.textContent = minTicketsRequired + ' tickets';
-      ticketFilterClear.style.display = 'inline-block';
-      ticketFilterContainer.classList.remove('open');
-      applyFilters();
-      e.stopPropagation();
-      return;
-    }
-
-    const isOpening = !ticketFilterContainer.classList.contains('open');
-    if (isOpening) {
-      const rect = ticketFilterContainer.getBoundingClientRect();
-      const dropdownHeight = 200;
-      const spaceAbove = rect.top;
-      const spaceBelow = window.innerHeight - rect.bottom;
-      ticketFilterList.classList.remove('open-up', 'open-down');
-      if (spaceBelow > dropdownHeight || spaceBelow > spaceAbove) {
-        ticketFilterList.classList.add('open-down');
-      } else {
-        ticketFilterList.classList.add('open-up');
-      }
-    }
-    ticketFilterContainer.classList.toggle('open');
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!ticketFilterContainer.contains(e.target)) {
-       ticketFilterContainer.classList.remove('open');
-    }
-  });
-
-
   // ===== PRICE RANGE SLIDER =====
   const rangeMin = document.getElementById('rangeMin');
   const rangeMax = document.getElementById('rangeMax');
   const trackFill = document.getElementById('rangeTrackFill');
   const priceMinInput = document.getElementById('priceMinInput');
   const priceMaxInput = document.getElementById('priceMaxInput');
-  const PRICE_MAX = 6493;
+  const PRICE_MAX = 7467;
 
   function updateRangeTrack() {
     const minVal = parseInt(rangeMin.value);
@@ -2068,7 +1957,7 @@
     sunday: false
   };
 
-  const dayToggleItems = document.querySelectorAll('.filter-section')[3].querySelectorAll('.toggle-switch input');
+  const dayToggleItems = document.querySelectorAll('.filter-section')[2].querySelectorAll('.toggle-switch input');
   const dayKeys = ['friday', 'fri-sun', 'saturday', 'sat-sun', 'sunday'];
 
   dayToggleItems.forEach((toggle, index) => {
@@ -2087,7 +1976,7 @@
     numbered: false
   };
 
-  const perkToggleItems = document.querySelectorAll('.filter-section')[4].querySelectorAll('.toggle-switch input');
+  const perkToggleItems = document.querySelectorAll('.filter-section')[3].querySelectorAll('.toggle-switch input');
   const perkKeys = ['grandstand', 'hospitality', 'covered', 'videowall', 'numbered'];
 
   perkToggleItems.forEach((toggle, index) => {
@@ -2099,7 +1988,6 @@
 
   // ===== SORT =====
   const sortSelect = document.querySelectorAll('.filter-select')[0];
-  const ticketCountSelect = document.getElementById('ticketCountFilter');
   sortSelect.addEventListener('change', applyFilters);
 
   // ===== APPLY FILTERS =====
@@ -2120,13 +2008,11 @@
         const price = parseFloat(card.dataset.price);
         const days = card.dataset.days;
         const perks = card.dataset.perks ? card.dataset.perks.split(',') : [];
-        const ticketsAvailable = parseInt(card.dataset.tickets) || 0;
 
         let show = true;
 
         if (price < minPrice || price > maxPrice) show = false;
         if (activeDays.length > 0 && !activeDays.includes(days)) show = false;
-        if (minTicketsRequired > 0 && ticketsAvailable < minTicketsRequired) show = false;
         
         if (activePerks.length > 0) {
           const hasAllPerks = activePerks.every(p => perks.includes(p));
@@ -2177,18 +2063,12 @@
     perkToggleItems.forEach((t, i) => { t.checked = false; perkFilters[perkKeys[i]] = false; });
 
     priceMinInput.value = '0';
-    priceMaxInput.value = '6492.66';
+    priceMaxInput.value = '7466.56';
     rangeMin.value = 0;
     rangeMax.value = PRICE_MAX;
     updateRangeTrack();
 
     sortSelect.value = 'Price';
-
-    // Reset ticket count filter
-    minTicketsRequired = 0;
-    ticketFilterSelectedText.textContent = 'Select tickets';
-    ticketFilterClear.style.display = 'none';
-    ticketFilterList.querySelectorAll('.ticket-dropdown-item').forEach(el => el.classList.remove('selected'));
 
     document.querySelectorAll('.category-group').forEach(g => g.style.display = '');
     document.querySelectorAll('.ticket-card').forEach(c => c.style.display = '');
@@ -2210,37 +2090,11 @@
     frame.style.transform = 'scale(1)';
   }
 
-  // ===== BOOKMARK TOGGLE =====
-  document.querySelectorAll('.bookmark-card').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const icon = btn.querySelector('.material-icons-outlined');
-      if (icon.textContent === 'bookmark_border') {
-        icon.textContent = 'bookmark';
-        icon.style.color = '#f97316';
-      } else {
-        icon.textContent = 'bookmark_border';
-        icon.style.color = '';
-      }
-    });
-  });
-
-  // ===== HEADER BOOKMARK =====
-  document.querySelector('.bookmark-icon').addEventListener('click', function() {
-    if (this.textContent === 'bookmark_border') {
-      this.textContent = 'bookmark';
-      this.style.color = '#f97316';
-    } else {
-      this.textContent = 'bookmark_border';
-      this.style.color = '#9ca3af';
-    }
-  });
-
   // ===== PACKAGE DETAIL DATA =====
   const packageDetails = {
     'yacht-party': {
       title: 'Saturday Night Yacht Party - Excluding event access (Saturday)',
-      price: 573.54,
+      price: 659.57,
       ticketsLeft: 20,
       images: [
         'assets/image1.jpeg',
@@ -2435,8 +2289,6 @@
   // Attach click to ticket cards
   document.querySelectorAll('.ticket-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open detail if clicking bookmark
-      if (e.target.closest('.bookmark-card')) return;
       const category = card.dataset.category;
       if (packageDetails[category]) {
         openPackageDetail(category);
