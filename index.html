@@ -294,6 +294,75 @@
     .filter-select:hover { border-color: #9ca3af; }
     .filter-select:focus { border-color: #f97316; outline: none; box-shadow: 0 0 0 2px rgba(249,115,22,0.1); }
 
+    /* Custom Ticket Filter Dropdown */
+    .ticket-filter-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #3b82f6;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #374151;
+      background: #fff;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    .ticket-filter-dropdown:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+    }
+    
+    .ticket-filter-dropdown .input-icon { font-size: 16px; color: #374151; }
+    .ticket-filter-dropdown .select-arrow { font-size: 16px; color: #374151; }
+    .ticket-filter-dropdown .clear-icon { font-size: 14px; color: #6b7280; padding: 2px; }
+    .ticket-filter-dropdown .clear-icon:hover { color: #111; }
+    .ticket-filter-dropdown .selected-value { flex: 1; }
+
+    .ticket-dropdown-list {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .ticket-dropdown-list.open-up { bottom: calc(100% + 4px); transform: translateY(10px); }
+    .ticket-filter-dropdown.open .ticket-dropdown-list.open-up { transform: translateY(0); }
+    
+    .ticket-dropdown-list.open-down { top: calc(100% + 4px); transform: translateY(-10px); }
+    .ticket-filter-dropdown.open .ticket-dropdown-list.open-down { transform: translateY(0); }
+
+    .ticket-filter-dropdown.open .ticket-dropdown-list { opacity: 1; visibility: visible; pointer-events: auto; }
+    
+    .ticket-dropdown-list::-webkit-scrollbar { width: 6px; }
+    .ticket-dropdown-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 6px; margin: 4px; }
+    .ticket-dropdown-list::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 6px; }
+
+    .ticket-dropdown-item {
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #374151;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .ticket-dropdown-item:hover { background: #f9fafb; }
+    .ticket-dropdown-item.selected { background: #A0DDBF; color: #fff; font-weight: 600; }
+
     /* Range Slider */
     .range-slider-container { margin-top: 4px; position: relative; }
 
@@ -1300,14 +1369,16 @@
         </span>
         <span class="material-icons-outlined chevron">expand_less</span>
       </div>
-      <select class="filter-select">
-        <option>Select tickets</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5+</option>
-      </select>
+      <div class="ticket-filter-dropdown" id="ticketFilterContainer" tabindex="0">
+        <span class="material-icons-outlined input-icon">confirmation_number</span>
+        <div class="selected-value" id="ticketFilterSelectedText">Select tickets</div>
+        <span class="material-icons-outlined clear-icon" id="ticketFilterClear" style="display:none;">close</span>
+        <span class="material-icons-outlined select-arrow">unfold_more</span>
+        
+        <div class="ticket-dropdown-list open-down" id="ticketFilterList">
+          <!-- Populated dynamically (1 to 50) -->
+        </div>
+      </div>
     </div>
 
     <!-- Event Days -->
@@ -1858,6 +1929,71 @@
 </div>
 
 <script>
+  let minTicketsRequired = 0;
+
+  // ===== TICKET COUNT FILTER =====
+  const ticketFilterContainer = document.getElementById('ticketFilterContainer');
+  const ticketFilterSelectedText = document.getElementById('ticketFilterSelectedText');
+  const ticketFilterList = document.getElementById('ticketFilterList');
+  const ticketFilterClear = document.getElementById('ticketFilterClear');
+
+  // Populate ticket filter list 1 to 50
+  for (let i = 1; i <= 50; i++) {
+    const item = document.createElement('div');
+    item.className = 'ticket-dropdown-item';
+    item.dataset.value = i;
+    item.textContent = i + ' tickets';
+    ticketFilterList.appendChild(item);
+  }
+
+  ticketFilterContainer.addEventListener('click', (e) => {
+    // Handle clearing
+    if (e.target.closest('.clear-icon')) {
+      minTicketsRequired = 0;
+      ticketFilterSelectedText.textContent = 'Select tickets';
+      ticketFilterClear.style.display = 'none';
+      ticketFilterList.querySelectorAll('.ticket-dropdown-item').forEach(el => el.classList.remove('selected'));
+      applyFilters();
+      e.stopPropagation();
+      return;
+    }
+
+    const item = e.target.closest('.ticket-dropdown-item');
+    if (item) {
+      ticketFilterList.querySelectorAll('.ticket-dropdown-item').forEach(el => el.classList.remove('selected'));
+      item.classList.add('selected');
+      minTicketsRequired = parseInt(item.dataset.value);
+      ticketFilterSelectedText.textContent = minTicketsRequired + ' tickets';
+      ticketFilterClear.style.display = 'inline-block';
+      ticketFilterContainer.classList.remove('open');
+      applyFilters();
+      e.stopPropagation();
+      return;
+    }
+
+    const isOpening = !ticketFilterContainer.classList.contains('open');
+    if (isOpening) {
+      const rect = ticketFilterContainer.getBoundingClientRect();
+      const dropdownHeight = 200;
+      const spaceAbove = rect.top;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      ticketFilterList.classList.remove('open-up', 'open-down');
+      if (spaceBelow > dropdownHeight || spaceBelow > spaceAbove) {
+        ticketFilterList.classList.add('open-down');
+      } else {
+        ticketFilterList.classList.add('open-up');
+      }
+    }
+    ticketFilterContainer.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!ticketFilterContainer.contains(e.target)) {
+       ticketFilterContainer.classList.remove('open');
+    }
+  });
+
+
   // ===== PRICE RANGE SLIDER =====
   const rangeMin = document.getElementById('rangeMin');
   const rangeMax = document.getElementById('rangeMax');
@@ -1962,7 +2098,8 @@
   });
 
   // ===== SORT =====
-  const sortSelect = document.querySelector('.filter-select');
+  const sortSelect = document.querySelectorAll('.filter-select')[0];
+  const ticketCountSelect = document.getElementById('ticketCountFilter');
   sortSelect.addEventListener('change', applyFilters);
 
   // ===== APPLY FILTERS =====
@@ -1983,11 +2120,22 @@
         const price = parseFloat(card.dataset.price);
         const days = card.dataset.days;
         const perks = card.dataset.perks ? card.dataset.perks.split(',') : [];
+        const categoryKey = card.dataset.category;
+        
+        let ticketsAvailable = 0;
+        if (packageDetails[categoryKey]) {
+          ticketsAvailable = packageDetails[categoryKey].ticketsLeft;
+        } else {
+          // Fallback if data not added yet for package
+          ticketsAvailable = 999; 
+        }
 
         let show = true;
 
         if (price < minPrice || price > maxPrice) show = false;
         if (activeDays.length > 0 && !activeDays.includes(days)) show = false;
+        if (minTicketsRequired > 0 && ticketsAvailable < minTicketsRequired) show = false;
+        
         if (activePerks.length > 0) {
           const hasAllPerks = activePerks.every(p => perks.includes(p));
           if (!hasAllPerks) show = false;
