@@ -1654,6 +1654,59 @@
       });
     }
 
+    // ===== PARENT FRAME INTEGRATION =====
+    let _parentHighlightedShape = null;
+
+    window.addEventListener('message', function(event) {
+      var data = event.data;
+      if (!data || !data.type) return;
+
+      if (data.type === 'highlight') {
+        // Clear previous parent highlight
+        if (_parentHighlightedShape) {
+          _parentHighlightedShape.style.stroke = '';
+          _parentHighlightedShape.style.strokeWidth = '';
+          _parentHighlightedShape.style.filter = '';
+          _parentHighlightedShape = null;
+        }
+
+        var label = data.label;
+        var shape = document.querySelector('[data-label="' + label + '"]');
+        if (!shape || !tooltip) return;
+
+        // Highlight with thick black border
+        shape.style.stroke = '#111';
+        shape.style.strokeWidth = '4px';
+        shape.style.filter = 'brightness(0.85) drop-shadow(0 0 6px rgba(0,0,0,0.3))';
+
+        // Show tooltip — use dynamic price/title if provided by parent, else default
+        if (data.price && data.title) {
+          var formattedPrice = '€' + parseFloat(data.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          tooltip.innerHTML = '<div style="display: flex; align-items: center;"><span style="background: #000; color: #fff; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 13px; margin-right: 12px; min-width: 70px; text-align: center;">' + formattedPrice + '</span><span style="font-size: 13px; font-weight: 600; color: #111;">' + data.title + '</span></div>';
+        } else {
+          tooltip.innerHTML = tooltipData[label] || tooltipData.default;
+        }
+        tooltip.style.opacity = '1';
+        activeTooltipShape = shape;
+        updateTooltipPosition();
+
+        _parentHighlightedShape = shape;
+      }
+
+      if (data.type === 'unhighlight') {
+        if (_parentHighlightedShape) {
+          _parentHighlightedShape.style.stroke = '';
+          _parentHighlightedShape.style.strokeWidth = '';
+          _parentHighlightedShape.style.filter = '';
+          _parentHighlightedShape = null;
+        }
+        if (tooltip) {
+          tooltip.style.opacity = '0';
+          activeTooltipShape = null;
+        }
+      }
+    });
+
   })();
 </script>
 </html>

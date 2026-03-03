@@ -1291,24 +1291,8 @@
     <button class="header-btn">
       <span class="material-icons-outlined">support_agent</span> Customer Support
     </button>
-    <button class="header-btn">
-      <span class="material-icons-outlined">person</span> Tour Bureau LLC
-    </button>
-    <button class="cart-btn" title="Cart">
-      <span class="material-icons-outlined">shopping_cart</span>
-    </button>
   </div>
 </header>
-
-<!-- ===== BREADCRUMB ===== -->
-<nav class="breadcrumb">
-  <a href="#" class="back-link"><span class="material-icons-outlined" style="font-size:16px">arrow_back</span> Back</a>
-  <a href="#"><span class="material-icons-outlined" style="font-size:14px">home</span> Home</a>
-  <span class="sep">›</span>
-  <a href="#">Formula1</a>
-  <span class="sep">›</span>
-  <span class="current">Monaco Grand Prix</span>
-</nav>
 
 <!-- ===== MAIN CONTENT ===== -->
 <div class="main-container">
@@ -1627,7 +1611,6 @@
           </div>
           <div class="ticket-perks">
             <span class="perk-icon" title="Grandstand"><span class="material-icons-outlined" style="font-size:14px">weekend</span></span>
-            <span class="perk-icon" title="Covered seating"><span class="material-icons-outlined" style="font-size:14px">roofing</span></span>
             <span class="perk-icon" title="Videowall"><span class="material-icons-outlined" style="font-size:14px">tv</span></span>
             <span class="perk-icon" title="Numbered seating"><span class="material-icons-outlined" style="font-size:14px">event_seat</span></span>
           </div>
@@ -1843,7 +1826,7 @@
       <div class="ticket-selector-row">
         <div class="ticket-qty-select" id="qtyDropdownContainer" tabindex="0">
           <span class="material-icons-outlined">confirmation_number</span>
-          <div class="selected-value" id="qtySelectedText">1 tickets</div>
+          <div class="selected-value" id="qtySelectedText">1 ticket</div>
           <span class="material-icons-outlined select-arrow">unfold_more</span>
           
           <div class="qty-dropdown-list open-up" id="qtyDropdownList">
@@ -1857,11 +1840,11 @@
 
       <div class="detail-tickets-left">
         <span class="dot"></span>
-        <span id="detailTicketsLeft">20 tickets left</span>
+        <span id="detailTicketsLeft">Subject to Availability</span>
       </div>
 
       <button class="add-to-cart-btn" id="addToCartBtn">
-        Add to cart <span class="material-icons-outlined" style="font-size:20px">chevron_right</span>
+        Enquire Now <span class="material-icons-outlined" style="font-size:20px">chevron_right</span>
       </button>
 
       <div id="detailPerksArea" style="display:none;">
@@ -1881,14 +1864,6 @@
   <!-- RIGHT PANEL: Map -->
   <div class="map-panel">
     <div class="map-controls">
-      <div class="map-toggle">
-        Legend
-        <label class="toggle-switch"><input type="checkbox" id="legendToggle"><span class="toggle-slider"></span></label>
-      </div>
-      <div class="map-toggle">
-        Map details
-        <label class="toggle-switch"><input type="checkbox" id="mapDetailsToggle"><span class="toggle-slider"></span></label>
-      </div>
       <button class="map-btn" title="Reset view" onclick="resetMap()">
         <span class="material-icons-outlined" style="font-size:18px">refresh</span>
       </button>
@@ -1935,7 +1910,7 @@
     if (parseInt(rangeMax.value) <= parseInt(rangeMin.value)) {
       rangeMax.value = parseInt(rangeMin.value) + 1;
     }
-    priceMaxInput.value = parseInt(rangeMax.value) >= PRICE_MAX ? '6492.66' : rangeMax.value;
+    priceMaxInput.value = parseInt(rangeMax.value) >= PRICE_MAX ? '7466.56' : rangeMax.value;
     updateRangeTrack();
     applyFilters();
   });
@@ -2487,8 +2462,9 @@
       ],
       perks: [
         { icon: 'local_bar', label: 'Hospitality' },
-        { icon: 'deck', label: 'Covered seating' },
-        { icon: 'tv', label: 'Videowall' }
+        { icon: 'roofing', label: 'Covered seating' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
       ],
       description: `<p>One of the most sought-after locations to watch the Grand Prix de Monaco, the Caravelles Terrace offers exceptional race views so you don't miss any of the action. Located on the top floor of Bloc A, this is the perfect vantage point to see the exciting race start, chequered flag, a majority of the circuit's most crucial portions as well as a picturesque view of the Port de Monaco.</p>
       <p><strong>Included</strong><br>Enjoy elevated views of the famed Circuit de Monaco while indulging in premium hospitality during the Grand Prix™ weekend including:</p>
@@ -2547,7 +2523,7 @@
       item.dataset.value = i;
       
       const textSpan = document.createElement('span');
-      textSpan.textContent = i + ' tickets (€' + pkg.price.toFixed(2) + ' per ticket)';
+      textSpan.textContent = i + (i === 1 ? ' ticket' : ' tickets') + ' (€' + pkg.price.toFixed(2) + ' per ticket)';
       item.appendChild(textSpan);
       
       if (i === 1) {
@@ -2567,8 +2543,8 @@
     groupOpt.innerHTML = '<span>Group request</span>';
     qtyDropdownList.appendChild(groupOpt);
 
-    qtySelectedText.textContent = '1 tickets';
-    detailTicketsLeft.textContent = pkg.ticketsLeft + ' tickets left';
+    qtySelectedText.textContent = '1 ticket';
+    detailTicketsLeft.textContent = 'Subject to Availability';
 
     // Carousel
     currentImages = pkg.images;
@@ -2653,7 +2629,7 @@
         detailQtyLabel.textContent = 'Group';
         detailUnitPrice.textContent = 'Request';
       } else {
-        qtySelectedText.textContent = val + ' tickets';
+        qtySelectedText.textContent = val + (val === '1' ? ' ticket' : ' tickets');
         detailQtyLabel.textContent = val;
         detailUnitPrice.textContent = '€' + currentPackagePrice.toFixed(2);
       }
@@ -2698,6 +2674,44 @@
       const category = card.dataset.category;
       if (packageDetails[category]) {
         openPackageDetail(category);
+      }
+    });
+  });
+
+  // ===== PACKAGE-MAP LINKING =====
+  const categoryToMapLabel = {
+    'yacht-party': 'C',
+    'grandstand-o': 'K',
+    'grandstand-o-sat-sun': 'K',
+    'yoshi': 'W',
+    'grandstand-l': 'J',
+    'grandstand-n': 'O',
+    'grandstand-b': 'M',
+    'grandstand-k': 'B',
+    'grandstand-t': 'H&I',
+    'superyacht-sat': 'D',
+    'superyacht-sun': 'E',
+    'heracles-c': 'B1',
+    'heracles-superyacht': 'C',
+    'caravelles': 'A1'
+  };
+
+  const mapIframe = document.getElementById('mapFrame');
+
+  document.querySelectorAll('.ticket-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const category = card.dataset.category;
+      const mapLabel = categoryToMapLabel[category];
+      if (mapLabel && mapIframe && mapIframe.contentWindow) {
+        const price = card.dataset.price;
+        const details = packageDetails[category];
+        const title = details ? details.title : '';
+        mapIframe.contentWindow.postMessage({ type: 'highlight', label: mapLabel, price: price, title: title }, '*');
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      if (mapIframe && mapIframe.contentWindow) {
+        mapIframe.contentWindow.postMessage({ type: 'unhighlight' }, '*');
       }
     });
   });
