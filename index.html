@@ -1166,6 +1166,24 @@
       margin-bottom: 12px;
     }
 
+    .detail-perks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .detail-perk-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #374151;
+    }
+    .detail-perk-item .material-icons-outlined {
+      font-size: 20px;
+      color: #6b7280;
+    }
+
     .detail-description {
       font-size: 14px;
       color: #374151;
@@ -1488,7 +1506,7 @@
         </div>
       </div>
 
-      <div class="ticket-card" data-category="grandstand-o" data-days="sat-sun" data-price="1477.75" data-perks="grandstand,videowall,numbered">
+      <div class="ticket-card" data-category="grandstand-o-sat-sun" data-days="sat-sun" data-price="1477.75" data-perks="grandstand,videowall,numbered">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6-7</div>
@@ -1678,7 +1696,7 @@
     <!-- Superyacht Hospitality -->
     <div class="category-group">
       <div class="category-name">Superyacht Hospitality</div>
-      <div class="ticket-card" data-category="superyacht" data-days="saturday" data-price="3549.88" data-perks="hospitality">
+      <div class="ticket-card" data-category="superyacht-sat" data-days="saturday" data-price="3549.88" data-perks="hospitality">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">6</div>
@@ -1698,7 +1716,7 @@
           <div class="price">€3,549.88 <span class="onwards">onwards</span></div>
         </div>
       </div>
-      <div class="ticket-card" data-category="superyacht" data-days="sunday" data-price="6151.14" data-perks="hospitality">
+      <div class="ticket-card" data-category="superyacht-sun" data-days="sunday" data-price="6151.14" data-perks="hospitality">
         <div class="ticket-date">
           <div class="month">Jun</div>
           <div class="day">7</div>
@@ -1845,6 +1863,10 @@
       <button class="add-to-cart-btn" id="addToCartBtn">
         Add to cart <span class="material-icons-outlined" style="font-size:20px">chevron_right</span>
       </button>
+
+      <div id="detailPerksArea" style="display:none;">
+        <!-- Populated by JS -->
+      </div>
 
       <div id="detailDescriptionArea">
         <!-- Populated by JS -->
@@ -2116,6 +2138,375 @@
         { label: 'Ticket type', value: 'Pick-up ticket' },
         { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' }
       ]
+    },
+    'grandstand-o': {
+      title: 'Grandstand O - High (Sunday)',
+      price: 1086.75,
+      ticketsLeft: 10,
+      images: [
+        'https://picsum.photos/seed/monaco-grandstand1/800/500',
+        'https://picsum.photos/seed/monaco-grandstand2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Grandstand O sits on the T-Quai, a prestigious dock home to the largest and most luxurious yachts. Spectators will face the Piscine sector and enjoy an unobstructed view of the high speed entry and chicane. Some of the higher seats may also have distant views of the pit lane as well.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 8 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-o-sat-sun': {
+      title: 'Grandstand O - High (Saturday—Sunday)',
+      price: 1477.75,
+      ticketsLeft: 24,
+      images: [
+        'https://picsum.photos/seed/monaco-o-satsu1/800/500',
+        'https://picsum.photos/seed/monaco-o-satsu2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Grandstand O sits on the T-Quai, a prestigious dock home to the largest and most luxurious yachts. Spectators will face the Piscine sector and enjoy an unobstructed view of the high speed entry and chicane. Some of the higher seats may also have distant views of the pit lane as well.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 8 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'yoshi': {
+      title: 'Yoshi Hospitality (Friday)',
+      price: 1277.78,
+      ticketsLeft: 24,
+      images: [
+        'https://picsum.photos/seed/monaco-yoshi1/800/500',
+        'https://picsum.photos/seed/monaco-yoshi2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' },
+        { icon: 'roofing', label: 'Covered seating' },
+        { icon: 'tv', label: 'Videowall' }
+      ],
+      description: `<p><strong>Inclusions</strong></p>
+      <ul>
+        <li>Access to the Japanese Garden offering elevated track-side views</li>
+        <li>A delicious assortment of Danish pastries on arrival</li>
+        <li>Welcome drink of Tea, Coffee, Fruit Juice, or Champagne on arrival</li>
+        <li>Large viewing screens located within the suite</li>
+        <li>Sumptuous cuisine prepared by the world-famous Yoshi Restaurant team</li>
+        <li>Fully complimentary bar, including Champagne, fine wines, selected spirits &amp; beers</li>
+        <li>Exclusive souvenir lanyards &amp; VIP passes</li>
+        <li>Official Programme</li>
+      </ul>
+      <p><strong>Yoshi Restaurant Details:</strong><br>The Yoshi Restaurant offers a spacious and elegant restaurant area, complete with plush seating and a fully stocked bar. You can relax and socialize with fellow guests, or simply take in the atmosphere of one of the world's most prestigious sporting events. The attentive staff will ensure that your every need is taken care of, from delicious gourmet cuisine to VIP views of the track. You can experience the race in style with our exclusive Japanese Garden terrace, offering unparalleled views of the on-track action.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 48 hours ahead of the event' },
+        { label: 'Seating', value: 'Up to 6 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-l': {
+      title: 'Grandstand L (Saturday—Sunday)',
+      price: 1443.25,
+      ticketsLeft: 15,
+      images: [
+        'https://picsum.photos/seed/monaco-l1/800/500',
+        'https://picsum.photos/seed/monaco-l2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Grandstand L sits next to the Swimming Pool facing towards Le Rocher, and offers spectators a fantastic view of the Piscine chicane and it's tight exit.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket via external ticket distribution system' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 2 weeks ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-n': {
+      title: 'Grandstand N (Saturday—Sunday)',
+      price: 1533.33,
+      ticketsLeft: 28,
+      images: [
+        'https://picsum.photos/seed/monaco-n1/800/500',
+        'https://picsum.photos/seed/monaco-n2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Accessible via two walkways or by boat, grandstand N-P is ideally situated in the center of the Monaco Harbor. Standing directly above the water, spectators can see cars arriving from Bureau de Tabac corner before going forward La Rascasse one.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket via external ticket distribution system' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 2 weeks ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-k': {
+      title: 'Grandstand K (Saturday—Sunday)',
+      price: 1794.00,
+      ticketsLeft: 23,
+      images: [
+        'https://picsum.photos/seed/monaco-k1/800/500',
+        'https://picsum.photos/seed/monaco-k2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Grandstand K stretches from Tabac to the Piscine chicane section. Spectators will enjoy a pleasant panorama of the harbour section and the Mediterranean.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket via external ticket distribution system' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 2 weeks ahead of the event' },
+        { label: 'Seating', value: 'Up to 6 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-b': {
+      title: 'Grandstand B (Saturday—Sunday)',
+      price: 1782.50,
+      ticketsLeft: 8,
+      images: [
+        'https://picsum.photos/seed/monaco-b1/800/500',
+        'https://picsum.photos/seed/monaco-b2/800/500'
+      ],
+      perks: [
+        { icon: 'stadium', label: 'Grandstand' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p>Grandstand B stands in front of the Casino Square, facing the Casino de Monte-Carlo and Hotel de Paris. Located on the outside of the track you will see the cars arriving from Sainte- Devote. In front of the stand you have a 2nd gear right hand corner, which falls away, making it very difficult for the driver. Due to the wide angel of sight you will appreciate the speed and movement of the cars. A videowall is opposite the stand so you want miss any action on the other parts of the track.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'E-ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 2 weeks ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'grandstand-t': {
+      title: 'Grandstand T (Sa+Su) + Heracles Rooftop (Fr) (Friday—Sunday)',
+      price: 3393.36,
+      ticketsLeft: 10,
+      images: [
+        'https://picsum.photos/seed/monaco-t1/800/500',
+        'https://picsum.photos/seed/monaco-t2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' },
+        { icon: 'tv', label: 'Videowall' },
+        { icon: 'confirmation_number', label: 'Numbered seating' }
+      ],
+      description: `<p><strong>Friday:</strong><br>Take in the breathtaking views of Monaco while you indulge in premium hospitality including specially curated menus served throughout the day and free-flowing beverages at an open bar with sparkling wine, beer, wine and soft drinks.</p>
+      <p>This 5th-floor rooftop terrace is situated to the left of the F1® Podium with views of the Starting Grid and Pit Lane exit, along with a prime vantage point to overlook the famous swimming pool, Port de Monaco &amp; more!</p>
+      <p><strong>Saturday &amp; Sunday</strong><br>Grandstand T Seating - Uncovered grandstand located between Turns 16 and 17 with one of the best views around Circuit de Monaco, including into the Pit Lane.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'superyacht-sat': {
+      title: 'Superyacht Hospitality (Saturday)',
+      price: 3549.88,
+      ticketsLeft: 14,
+      images: [
+        'https://picsum.photos/seed/monaco-yacht-sat1/800/500',
+        'https://picsum.photos/seed/monaco-yacht-sat2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' }
+      ],
+      description: `<p>Relax on the comfortable yacht sofas or soak up the sun on the spacious deck all while enjoying unparalleled views of the race track and the Mediterranean Sea. The onboard dedicated crew will ensure that every guest's needs are met. The team will be serving gourmet food and complimentary drinks throughout the day. Our trackside super yacht is the perfect place to entertain clients, impress colleagues, or celebrate a special occasion. An expert team is ready to welcome you aboard and make your Monaco Grand Prix experience unforgettable.</p>
+      <ul>
+        <li>Incredible views of the world-famous Monaco street circuit</li>
+        <li>A delicious light breakfast on board</li>
+        <li>Superb buffet lunch prepared by onboard chefs</li>
+        <li>Fully complimentary bar, including Champagne, fine wines, selected spirits &amp; beers</li>
+        <li>Flatscreen TVs onboard the Yacht to keep up with the action</li>
+        <li>Large viewing screen located opposite</li>
+        <li>Premium tender transfers to and from the Yacht</li>
+        <li>Exclusive souvenir lanyard</li>
+        <li>Exclusive souvenir VIP entry pass</li>
+      </ul>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 4 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'superyacht-sun': {
+      title: 'Superyacht Hospitality (Sunday)',
+      price: 6151.14,
+      ticketsLeft: 17,
+      images: [
+        'https://picsum.photos/seed/monaco-yacht-sun1/800/500',
+        'https://picsum.photos/seed/monaco-yacht-sun2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' }
+      ],
+      description: `<p>Relax on the comfortable yacht sofas or soak up the sun on the spacious deck all while enjoying unparalleled views of the race track and the Mediterranean Sea. The onboard dedicated crew will ensure that every guest's needs are met. The team will be serving gourmet food and complimentary drinks throughout the day. Our trackside super yacht is the perfect place to entertain clients, impress colleagues, or celebrate a special occasion. An expert team is ready to welcome you aboard and make your Monaco Grand Prix experience unforgettable.</p>
+      <ul>
+        <li>Incredible views of the world-famous Monaco street circuit</li>
+        <li>A delicious light breakfast on board</li>
+        <li>Superb buffet lunch prepared by onboard chefs</li>
+        <li>Fully complimentary bar, including Champagne, fine wines, selected spirits &amp; beers</li>
+        <li>Flatscreen TVs onboard the Yacht to keep up with the action</li>
+        <li>Large viewing screen located opposite</li>
+        <li>Premium tender transfers to and from the Yacht</li>
+        <li>Exclusive souvenir lanyard</li>
+        <li>Exclusive souvenir VIP entry pass</li>
+      </ul>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 4 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'heracles-c': {
+      title: 'Heracles Rooftop C (Saturday—Sunday)',
+      price: 6787.69,
+      ticketsLeft: 10,
+      images: [
+        'https://picsum.photos/seed/monaco-heracles-c1/800/500',
+        'https://picsum.photos/seed/monaco-heracles-c2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' },
+        { icon: 'tv', label: 'Videowall' }
+      ],
+      description: `<p>Take in the breathtaking views of Monaco while you indulge in excellent hospitality including:</p>
+      <ul>
+        <li>Specially curated food menus served throughout the day</li>
+        <li>Free-flowing beverages at an open bar with sparkling wine, beer, wine and soft drinks</li>
+        <li>TV screens with live track feed &amp; more!</li>
+      </ul>
+      <p>This 5th-floor rooftop terrace is situated to the left of the F1® Podium with views of the Starting Grid and Pit Lane exit, along with a prime vantage point to overlook the famous swimming pool, Port de Monaco &amp; more!</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 2 weeks ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'heracles-superyacht': {
+      title: 'Heracles Rooftop (Saturday) & Superyacht (Sunday) Combination Package (Saturday—Sunday)',
+      price: 7272.59,
+      ticketsLeft: 10,
+      images: [
+        'https://picsum.photos/seed/monaco-heracles-sy1/800/500',
+        'https://picsum.photos/seed/monaco-heracles-sy2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' },
+        { icon: 'tv', label: 'Videowall' }
+      ],
+      description: `<p><strong>Heracles Rooftop (Saturday)</strong><br>This 5th-floor rooftop terrace is situated to the left of the F1® Podium with views of the Starting Grid and Pit Lane exit, along with a prime vantage point to overlook the famous swimming pool, Port de Monaco and more.</p>
+      <p>Take in the breathtaking views of Monaco while you indulge in premium hospitality including specially curated menus served throughout the day and free-flowing beverages at an open bar with beer, wine and soft drinks.</p>
+      <p><strong>Yacht Hospitality (Sunday)</strong><br>Experience all the glitz and glamour of Monaco aboard the exclusive ACM Yacht superbly situated in the Monaco Harbour*. Offering the perfect blend of luxury and an exciting atmosphere, you'll enjoy all-inclusive, delicious food bites and beverages including spirits, beer, wine and soft drinks, plus live entertainment and an appearance by an F1® insider.</p>
+      <p>The exact location and name of the Yacht will be announced closer to the Grand Prix™.</p>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
+    },
+    'caravelles': {
+      title: 'Caravelles Terrace (Saturday—Sunday)',
+      price: 7466.56,
+      ticketsLeft: 1,
+      images: [
+        'https://picsum.photos/seed/monaco-caravelles1/800/500',
+        'https://picsum.photos/seed/monaco-caravelles2/800/500'
+      ],
+      perks: [
+        { icon: 'local_bar', label: 'Hospitality' },
+        { icon: 'deck', label: 'Covered seating' },
+        { icon: 'tv', label: 'Videowall' }
+      ],
+      description: `<p>One of the most sought-after locations to watch the Grand Prix de Monaco, the Caravelles Terrace offers exceptional race views so you don't miss any of the action. Located on the top floor of Bloc A, this is the perfect vantage point to see the exciting race start, chequered flag, a majority of the circuit's most crucial portions as well as a picturesque view of the Port de Monaco.</p>
+      <p><strong>Included</strong><br>Enjoy elevated views of the famed Circuit de Monaco while indulging in premium hospitality during the Grand Prix™ weekend including:</p>
+      <ul>
+        <li>Unique food bites and delicious lunch</li>
+        <li>Premium open bar serving beer, wine and soft drinks</li>
+        <li>TV screens with live track feed & more!</li>
+      </ul>`,
+      eventInfo: [
+        { label: 'Tournament', value: 'Formula 1 (2026)' },
+        { label: 'Venue', value: 'Circuit de Monaco' },
+        { label: 'Date', value: 'Jun 5—7, 2026' },
+        { label: 'City', value: 'Monte Carlo' },
+        { label: 'Country', value: 'Monaco' },
+        { label: 'Ticket type', value: 'Pick-up ticket' },
+        { label: 'Delivery', value: 'Your tickets will be delivered at least 7 days ahead of the event' },
+        { label: 'Seating', value: 'Up to 10 seats are guaranteed to be sitting together for this event' }
+      ]
     }
   };
 
@@ -2184,6 +2575,21 @@
     currentImageIndex = 0;
     carouselImg.src = currentImages[0];
     carouselImg.alt = pkg.title;
+
+    // Perks
+    const detailPerksArea = document.getElementById('detailPerksArea');
+    if (pkg.perks && pkg.perks.length > 0) {
+      let perksHTML = '<h3 class="detail-section-title">Perks</h3><div class="detail-perks-list">';
+      pkg.perks.forEach(perk => {
+        perksHTML += '<div class="detail-perk-item"><span class="material-icons-outlined">' + perk.icon + '</span><span>' + perk.label + '</span></div>';
+      });
+      perksHTML += '</div><hr style="border:none;border-top:1px solid #eee;margin:16px 0;">';
+      detailPerksArea.innerHTML = perksHTML;
+      detailPerksArea.style.display = 'block';
+    } else {
+      detailPerksArea.innerHTML = '';
+      detailPerksArea.style.display = 'none';
+    }
 
     // Description
     detailDescriptionArea.innerHTML = '<h3 class="detail-section-title">Description</h3><div class="detail-description">' + pkg.description + '</div>';
